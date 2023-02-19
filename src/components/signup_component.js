@@ -1,4 +1,5 @@
 import React, { Component, useState } from "react";
+import app from './firbase_config';
 
 export default function SignUp() {
   const [fname, setFname] = useState("");
@@ -49,35 +50,7 @@ export default function SignUp() {
       <div className="auth-inner">
         <form onSubmit={handleSubmit}>
           <h3>Sign Up</h3>
-          <div>
-            Register As
-            <input
-              type="radio"
-              name="UserType"
-              value="User"
-              onChange={(e) => setUserType(e.target.value)}
-            />
-            User
-            <input
-              type="radio"
-              name="UserType"
-              value="Admin"
-              onChange={(e) => setUserType(e.target.value)}
-            />
-            Admin
-          </div>
-          {userType == "Admin" ? (
-            <div className="mb-3">
-              <label>Secret Key</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Secret Key"
-                onChange={(e) => setSecretKey(e.target.value)}
-              />
-            </div>
-          ) : null}
-
+         
           <div className="mb-3">
             <label>First name</label>
             <input
