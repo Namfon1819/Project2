@@ -75,7 +75,7 @@ export default function Login() {
 
           <div className="d-grid">
            
-              <a type="submit" className="btn btn-primary" href="/LOGIN-REG/home/home3.html">Submit</a>
+              <a type="submit" className="btn btn-primary" href="/home3.html">Submit</a>
       
           </div>
           <p className="forgot-password text-right">
