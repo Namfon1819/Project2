@@ -93,7 +93,7 @@ export default function SignUp() {
 
           <div className="d-grid">
             <button type="submit" className="btn btn-primary">
-              Sign Up
+            <a href="/sign-in">sign in?</a>Sign Up
             </button>
           </div>
           <p className="forgot-password text-right">
