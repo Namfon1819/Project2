@@ -15,7 +15,7 @@ const JWT_SECRET =
   "hvdvay6ert72839289()aiyg8t87qt72393293883uhefiuh78ttq3ifi78272jbkj?[]]pou89ywe";
 
 const mongoUrl =
-  "mongodb+srv://adarsh:adarsh@cluster0.zllye.mongodb.net/?retryWrites=true&w=majority";
+  "mongodb+srv://Namfona:6410301005@cluster0.qoaw1im.mongodb.net/?retryWrites=true&w=majority";
 
 mongoose
   .connect(mongoUrl, {
@@ -27,6 +27,7 @@ mongoose
   .catch((e) => console.log(e));
 
 require("./userDetails");
+
 
 const User = mongoose.model("UserInfo");
 app.post("/register", async (req, res) => {
@@ -61,7 +62,7 @@ app.post("/login-user", async (req, res) => {
   }
   if (await bcrypt.compare(password, user.password)) {
     const token = jwt.sign({ email: user.email }, JWT_SECRET, {
-      expiresIn: "10s",
+      expiresIn: "15m",
     });
 
     if (res.status(201)) {
@@ -95,7 +96,7 @@ app.post("/userData", async (req, res) => {
       .catch((error) => {
         res.send({ status: "error", data: error });
       });
-  } catch (error) {}
+  } catch (error) { }
 });
 
 app.listen(5000, () => {
@@ -123,8 +124,8 @@ app.post("/forgot-password", async (req, res) => {
     });
 
     var mailOptions = {
-      from: "youremail@gmail.com",
-      to: "thedebugarena@gmail.com",
+      from: "",
+      to: "",
       subject: "Password Reset",
       text: link,
     };
@@ -137,7 +138,7 @@ app.post("/forgot-password", async (req, res) => {
       }
     });
     console.log(link);
-  } catch (error) {}
+  } catch (error) { }
 });
 
 app.get("/reset-password/:id/:token", async (req, res) => {
@@ -207,3 +208,33 @@ app.post("/deleteUser", async (req, res) => {
     console.log(error);
   }
 });
+
+
+
+
+
+app.get("/paginatedUsers", async (req, res) => {
+  const allUser = await User.find({});
+  const page = parseInt(req.query.page)
+  const limit = parseInt(req.query.limit)
+
+  const startIndex = (page - 1) * limit
+  const lastIndex = (page) * limit
+
+  const results = {}
+  results.totalUser=allUser.length;
+  results.pageCount=Math.ceil(allUser.length/limit);
+
+  if (lastIndex < allUser.length) {
+    results.next = {
+      page: page + 1,
+    }
+  }
+  if (startIndex > 0) {
+    results.prev = {
+      page: page - 1,
+    }
+  }
+  results.result = allUser.slice(startIndex, lastIndex);
+  res.json(results)
+})
